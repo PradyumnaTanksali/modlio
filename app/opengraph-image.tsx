@@ -23,11 +23,12 @@ export default async function OG() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <svg width="36" height="36" viewBox="0 0 24 24">
-            <rect x="0" y="0" width="24" height="24" fill="#0A0B0F" />
-            <rect x="4" y="14" width="16" height="6" fill="#E8EAED" />
-            <rect x="4" y="6" width="10" height="6" fill="#E8EAED" />
-            <rect x="4" y="6" width="6" height="6" fill="#3B82F6" />
+          <svg width="36" height="36" viewBox="0 0 64 64">
+            <rect width="64" height="64" fill="#0A0B0F" />
+            <rect x="8" y="44" width="48" height="12" fill="#E8EAED" />
+            <rect x="8" y="28" width="32" height="12" fill="#E8EAED" />
+            <rect x="8" y="12" width="20" height="12" fill="#E8EAED" />
+            <rect x="8" y="12" width="12" height="12" fill="#3B82F6" />
           </svg>
           <div
             style={{

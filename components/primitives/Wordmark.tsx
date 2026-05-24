@@ -11,7 +11,7 @@ export function Monogram({ size = 20, className }: { size?: number; className?: 
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox="0 0 64 64"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="Modlio monogram"
@@ -19,10 +19,11 @@ export function Monogram({ size = 20, className }: { size?: number; className?: 
     >
       <title>Modlio</title>
       <desc>Three stacked blocks; the top block has an electric-blue inset square.</desc>
-      <rect x="0" y="0" width="24" height="24" fill="#0A0B0F" />
-      <rect x="4" y="14" width="16" height="6" fill="#E8EAED" />
-      <rect x="4" y="6" width="10" height="6" fill="#E8EAED" />
-      <rect x="4" y="6" width="6" height="6" fill="#3B82F6" />
+      <rect width="64" height="64" fill="#0A0B0F" />
+      <rect x="8" y="44" width="48" height="12" fill="#E8EAED" />
+      <rect x="8" y="28" width="32" height="12" fill="#E8EAED" />
+      <rect x="8" y="12" width="20" height="12" fill="#E8EAED" />
+      <rect x="8" y="12" width="12" height="12" fill="#3B82F6" />
     </svg>
   );
 }

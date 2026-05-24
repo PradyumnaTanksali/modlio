@@ -1,0 +1,7 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Modlio">
+  <title>Modlio</title>
+  <rect x="8" y="44" width="48" height="12" fill="currentColor"/>
+  <rect x="8" y="28" width="32" height="12" fill="currentColor"/>
+  <rect x="8" y="12" width="20" height="12" fill="currentColor"/>
+  <rect x="8" y="12" width="12" height="12" fill="currentColor" opacity="0.4"/>
+</svg>
