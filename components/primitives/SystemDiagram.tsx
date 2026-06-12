@@ -2,6 +2,13 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useId } from "react";
+import {
+  diagramViewport,
+  drawPath,
+  ease,
+  fadeIn,
+  fadeUpSm,
+} from "@/lib/motion";
 
 type Box = {
   id: string;
@@ -135,12 +142,13 @@ export function ArogyamDiagram() {
           strokeWidth={1}
           strokeLinecap="square"
           strokeLinejoin="miter"
-          initial={reduced ? false : { pathLength: 0, opacity: 0 }}
-          whileInView={reduced ? undefined : { pathLength: 1, opacity: 1 }}
-          viewport={{ once: true, margin: "-80px" }}
+          variants={drawPath}
+          initial={reduced ? false : "hidden"}
+          whileInView={reduced ? undefined : "visible"}
+          viewport={diagramViewport}
           transition={{
             duration: 1.0,
-            ease: [0.4, 0, 0.2, 1],
+            ease,
             delay: 0.4 + i * 0.08,
           }}
         />
@@ -157,9 +165,10 @@ export function ArogyamDiagram() {
             cy={tip.y}
             r={1.6}
             fill="var(--accent)"
-            initial={reduced ? false : { opacity: 0 }}
-            whileInView={reduced ? undefined : { opacity: 1 }}
-            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeIn}
+            initial={reduced ? false : "hidden"}
+            whileInView={reduced ? undefined : "visible"}
+            viewport={diagramViewport}
             transition={{
               duration: 0.3,
               delay: 0.4 + i * 0.08 + 0.85,
@@ -171,10 +180,11 @@ export function ArogyamDiagram() {
       {BOXES.map((b, i) => (
         <motion.g
           key={b.id}
-          initial={reduced ? false : { opacity: 0, y: 4 }}
-          whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.4, delay: i * 0.06, ease: [0.4, 0, 0.2, 1] }}
+          variants={fadeUpSm}
+          initial={reduced ? false : "hidden"}
+          whileInView={reduced ? undefined : "visible"}
+          viewport={diagramViewport}
+          transition={{ duration: 0.4, delay: i * 0.06, ease }}
         >
           <rect
             x={b.x}

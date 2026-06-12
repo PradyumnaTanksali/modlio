@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useId } from "react";
+import { diagramViewport, drawPath, ease, fadeUpSm } from "@/lib/motion";
 
 type Phase = {
   ordinal: string;
@@ -67,9 +68,10 @@ export function PhaseFlowDiagram() {
           return (
             <g key={p.ordinal}>
               <motion.g
-                initial={reduced ? false : { opacity: 0, y: 4 }}
-                whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
+                variants={fadeUpSm}
+                initial={reduced ? false : "hidden"}
+                whileInView={reduced ? undefined : "visible"}
+                viewport={diagramViewport}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
               >
                 <rect
@@ -136,18 +138,17 @@ export function PhaseFlowDiagram() {
 
               {next && (
                 <motion.g
-                  initial={reduced ? false : { pathLength: 0, opacity: 0 }}
-                  whileInView={
-                    reduced ? undefined : { pathLength: 1, opacity: 1 }
-                  }
-                  viewport={{ once: true, margin: "-80px" }}
+                  variants={drawPath}
+                  initial={reduced ? false : "hidden"}
+                  whileInView={reduced ? undefined : "visible"}
+                  viewport={diagramViewport}
                   transition={{
                     duration: 0.6,
                     delay: 0.45 + i * 0.1,
-                    ease: [0.4, 0, 0.2, 1],
+                    ease,
                   }}
                 >
-                  <motion.line
+                  <line
                     x1={x + w}
                     y1={y + h / 2}
                     x2={x + w + 36}
@@ -155,7 +156,7 @@ export function PhaseFlowDiagram() {
                     stroke="var(--accent)"
                     strokeWidth={1}
                   />
-                  <motion.path
+                  <path
                     d={`M ${x + w + 32} ${y + h / 2 - 4} L ${x + w + 38} ${
                       y + h / 2
                     } L ${x + w + 32} ${y + h / 2 + 4}`}

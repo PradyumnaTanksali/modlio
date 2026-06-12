@@ -27,7 +27,21 @@ export const fadeUp: Variants = {
   visible: { opacity: 1, y: 0 },
 };
 
+/** Subtle 4px lift for schematic diagram boxes. */
+export const fadeUpSm: Variants = {
+  hidden: { opacity: 0, y: 4 },
+  visible: { opacity: 1, y: 0 },
+};
+
+export const fadeIn: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
+
 export const drawPath: Variants = {
   hidden: { pathLength: 0, opacity: 0 },
   visible: { pathLength: 1, opacity: 1 },
 };
+
+/** Shared viewport config for scroll-into-view diagram animation. */
+export const diagramViewport = { once: true, margin: "-80px" } as const;
