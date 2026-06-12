@@ -61,8 +61,13 @@ const ANNOTATIONS: Annotation[] = [
 const VIEWBOX_W = 620;
 const VIEWBOX_H = 360;
 
-/** Top-to-bottom flow order for the mobile vertical stack. */
-const MOBILE_ORDER = ["web", "wa", "api", "pg", "pgv", "ws", "lg", "abdm"];
+/**
+ * Mobile vertical stack. Web and WhatsApp are parallel clients of the
+ * API — grouped side by side with no connector between them, so the
+ * stack never asserts a Web → WhatsApp edge that the system lacks.
+ */
+const MOBILE_CLIENTS = ["web", "wa"];
+const MOBILE_CHAIN = ["api", "pg", "pgv", "ws", "lg", "abdm"];
 
 function boxById(id: string) {
   const b = BOXES.find((b) => b.id === id);
@@ -236,42 +241,56 @@ export function ArogyamDiagram() {
   );
 }
 
+function MobileBox({ box }: { box: Box }) {
+  return (
+    <div
+      className={
+        box.accent
+          ? "border border-accent bg-bg-card p-4"
+          : "border border-ink-rule bg-bg-card p-4"
+      }
+    >
+      <div className="text-[13px] font-medium text-ink">{box.label}</div>
+      {box.sub && (
+        <div className="mt-1 text-[10.5px] tracking-[0.04em] text-ink-faint">
+          {box.sub}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MobileConnector() {
+  return (
+    <div
+      aria-hidden
+      className="mx-auto my-1.5 h-5 w-px bg-accent"
+      style={{ opacity: 0.6 }}
+    />
+  );
+}
+
 /**
  * BRIEF §3.6 — diagrams collapse to a vertical flow on mobile.
- * Same boxes and annotations as the desktop schematic, stacked
+ * Same boxes and annotations as the desktop schematic: the two
+ * parallel clients side by side, then the chain stacked
  * top-to-bottom with accent connectors.
  */
 function MobileStack() {
   return (
     <div className="md:hidden flex flex-col font-mono">
-      {MOBILE_ORDER.map((id, i) => {
-        const b = boxById(id);
-        return (
-          <div key={b.id} className="relative">
-            <div
-              className={
-                b.accent
-                  ? "border border-accent bg-bg-card p-4"
-                  : "border border-ink-rule bg-bg-card p-4"
-              }
-            >
-              <div className="text-[13px] font-medium text-ink">{b.label}</div>
-              {b.sub && (
-                <div className="mt-1 text-[10.5px] tracking-[0.04em] text-ink-faint">
-                  {b.sub}
-                </div>
-              )}
-            </div>
-            {i < MOBILE_ORDER.length - 1 && (
-              <div
-                aria-hidden
-                className="mx-auto my-1.5 h-5 w-px bg-accent"
-                style={{ opacity: 0.6 }}
-              />
-            )}
-          </div>
-        );
-      })}
+      <div className="grid grid-cols-2 gap-2">
+        {MOBILE_CLIENTS.map((id) => (
+          <MobileBox key={id} box={boxById(id)} />
+        ))}
+      </div>
+      <MobileConnector />
+      {MOBILE_CHAIN.map((id, i) => (
+        <div key={id}>
+          <MobileBox box={boxById(id)} />
+          {i < MOBILE_CHAIN.length - 1 && <MobileConnector />}
+        </div>
+      ))}
 
       <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-[10px] tracking-[0.04em] text-ink-faint">
         {ANNOTATIONS.map((a) => (
