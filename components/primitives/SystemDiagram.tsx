@@ -61,6 +61,9 @@ const ANNOTATIONS: Annotation[] = [
 const VIEWBOX_W = 620;
 const VIEWBOX_H = 360;
 
+/** Top-to-bottom flow order for the mobile vertical stack. */
+const MOBILE_ORDER = ["web", "wa", "api", "pg", "pgv", "ws", "lg", "abdm"];
+
 function boxById(id: string) {
   const b = BOXES.find((b) => b.id === id);
   if (!b) throw new Error(`box ${id} missing`);
@@ -103,128 +106,178 @@ export function ArogyamDiagram() {
   const descId = useId();
 
   return (
-    <svg
-      viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-labelledby={`${titleId} ${descId}`}
-      className="w-full h-auto block font-mono"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <title id={titleId}>Arogyam architecture</title>
-      <desc id={descId}>
-        A schematic system diagram of Arogyam. A Next.js web client and Gupshup
-        WhatsApp gateway both reach a tRPC API. The API talks to Postgres with
-        row-level security, pgvector embeddings, a Rust Axum WebSocket sidecar,
-        and a Python LangGraph orchestrator. LangGraph reaches pgvector and the
-        ABDM sandbox.
-      </desc>
+    <div>
+      <svg
+        viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby={`${titleId} ${descId}`}
+        className="w-full h-auto hidden md:block font-mono"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <title id={titleId}>Arogyam architecture</title>
+        <desc id={descId}>
+          A schematic system diagram of Arogyam. A Next.js web client and Gupshup
+          WhatsApp gateway both reach a tRPC API. The API talks to Postgres with
+          row-level security, pgvector embeddings, a Rust Axum WebSocket sidecar,
+          and a Python LangGraph orchestrator. LangGraph reaches pgvector and the
+          ABDM sandbox.
+        </desc>
 
-      {ANNOTATIONS.map((a, i) => (
-        <text
-          key={i}
-          x={a.x}
-          y={a.y}
-          textAnchor="middle"
-          className="fill-ink-faint"
-          style={{ fontSize: 9.5, letterSpacing: 0.4 }}
-        >
-          {a.text}
-        </text>
-      ))}
+        {ANNOTATIONS.map((a, i) => (
+          <text
+            key={i}
+            x={a.x}
+            y={a.y}
+            textAnchor="middle"
+            className="fill-ink-faint"
+            style={{ fontSize: 9.5, letterSpacing: 0.4 }}
+          >
+            {a.text}
+          </text>
+        ))}
 
-      {CONNECTORS.map((c, i) => (
-        <motion.path
-          key={`${c.from}-${c.to}-${i}`}
-          d={pathFor(c)}
-          fill="none"
-          stroke="var(--accent)"
-          strokeWidth={1}
-          strokeLinecap="square"
-          strokeLinejoin="miter"
-          variants={drawPath}
-          initial={reduced ? false : "hidden"}
-          whileInView={reduced ? undefined : "visible"}
-          viewport={diagramViewport}
-          transition={{
-            duration: 1.0,
-            ease,
-            delay: 0.4 + i * 0.08,
-          }}
-        />
-      ))}
-
-      {CONNECTORS.map((c, i) => {
-        const to = boxById(c.to);
-        const from = boxById(c.from);
-        const tip = anchor(to, from);
-        return (
-          <motion.circle
-            key={`tip-${c.from}-${c.to}-${i}`}
-            cx={tip.x}
-            cy={tip.y}
-            r={1.6}
-            fill="var(--accent)"
-            variants={fadeIn}
+        {CONNECTORS.map((c, i) => (
+          <motion.path
+            key={`${c.from}-${c.to}-${i}`}
+            d={pathFor(c)}
+            fill="none"
+            stroke="var(--accent)"
+            strokeWidth={1}
+            strokeLinecap="square"
+            strokeLinejoin="miter"
+            variants={drawPath}
             initial={reduced ? false : "hidden"}
             whileInView={reduced ? undefined : "visible"}
             viewport={diagramViewport}
             transition={{
-              duration: 0.3,
-              delay: 0.4 + i * 0.08 + 0.85,
+              duration: 1.0,
+              ease,
+              delay: 0.4 + i * 0.08,
             }}
           />
+        ))}
+
+        {CONNECTORS.map((c, i) => {
+          const to = boxById(c.to);
+          const from = boxById(c.from);
+          const tip = anchor(to, from);
+          return (
+            <motion.circle
+              key={`tip-${c.from}-${c.to}-${i}`}
+              cx={tip.x}
+              cy={tip.y}
+              r={1.6}
+              fill="var(--accent)"
+              variants={fadeIn}
+              initial={reduced ? false : "hidden"}
+              whileInView={reduced ? undefined : "visible"}
+              viewport={diagramViewport}
+              transition={{
+                duration: 0.3,
+                delay: 0.4 + i * 0.08 + 0.85,
+              }}
+            />
+          );
+        })}
+
+        {BOXES.map((b, i) => (
+          <motion.g
+            key={b.id}
+            variants={fadeUpSm}
+            initial={reduced ? false : "hidden"}
+            whileInView={reduced ? undefined : "visible"}
+            viewport={diagramViewport}
+            transition={{ duration: 0.4, delay: i * 0.06, ease }}
+          >
+            <rect
+              x={b.x}
+              y={b.y}
+              width={b.w}
+              height={b.h}
+              fill="var(--bg-card)"
+              stroke={b.accent ? "var(--accent)" : "var(--ink-muted)"}
+              strokeWidth={b.accent ? 1 : 0.75}
+              strokeOpacity={b.accent ? 1 : 0.55}
+            />
+            <text
+              x={b.x + 12}
+              y={b.y + 22}
+              className="fill-ink"
+              style={{ fontSize: 12, fontWeight: 500 }}
+            >
+              {b.label}
+            </text>
+            {b.sub && (
+              <text
+                x={b.x + 12}
+                y={b.y + 38}
+                className="fill-ink-faint"
+                style={{ fontSize: 10, letterSpacing: 0.3 }}
+              >
+                {b.sub}
+              </text>
+            )}
+            {b.accent && (
+              <rect
+                x={b.x + b.w - 6}
+                y={b.y + 4}
+                width={2}
+                height={6}
+                fill="var(--accent)"
+              />
+            )}
+          </motion.g>
+        ))}
+      </svg>
+
+      <MobileStack />
+    </div>
+  );
+}
+
+/**
+ * BRIEF §3.6 — diagrams collapse to a vertical flow on mobile.
+ * Same boxes and annotations as the desktop schematic, stacked
+ * top-to-bottom with accent connectors.
+ */
+function MobileStack() {
+  return (
+    <div className="md:hidden flex flex-col font-mono">
+      {MOBILE_ORDER.map((id, i) => {
+        const b = boxById(id);
+        return (
+          <div key={b.id} className="relative">
+            <div
+              className={
+                b.accent
+                  ? "border border-accent bg-bg-card p-4"
+                  : "border border-ink-rule bg-bg-card p-4"
+              }
+            >
+              <div className="text-[13px] font-medium text-ink">{b.label}</div>
+              {b.sub && (
+                <div className="mt-1 text-[10.5px] tracking-[0.04em] text-ink-faint">
+                  {b.sub}
+                </div>
+              )}
+            </div>
+            {i < MOBILE_ORDER.length - 1 && (
+              <div
+                aria-hidden
+                className="mx-auto my-1.5 h-5 w-px bg-accent"
+                style={{ opacity: 0.6 }}
+              />
+            )}
+          </div>
         );
       })}
 
-      {BOXES.map((b, i) => (
-        <motion.g
-          key={b.id}
-          variants={fadeUpSm}
-          initial={reduced ? false : "hidden"}
-          whileInView={reduced ? undefined : "visible"}
-          viewport={diagramViewport}
-          transition={{ duration: 0.4, delay: i * 0.06, ease }}
-        >
-          <rect
-            x={b.x}
-            y={b.y}
-            width={b.w}
-            height={b.h}
-            fill="var(--bg-card)"
-            stroke={b.accent ? "var(--accent)" : "var(--ink-muted)"}
-            strokeWidth={b.accent ? 1 : 0.75}
-            strokeOpacity={b.accent ? 1 : 0.55}
-          />
-          <text
-            x={b.x + 12}
-            y={b.y + 22}
-            className="fill-ink"
-            style={{ fontSize: 12, fontWeight: 500 }}
-          >
-            {b.label}
-          </text>
-          {b.sub && (
-            <text
-              x={b.x + 12}
-              y={b.y + 38}
-              className="fill-ink-faint"
-              style={{ fontSize: 10, letterSpacing: 0.3 }}
-            >
-              {b.sub}
-            </text>
-          )}
-          {b.accent && (
-            <rect
-              x={b.x + b.w - 6}
-              y={b.y + 4}
-              width={2}
-              height={6}
-              fill="var(--accent)"
-            />
-          )}
-        </motion.g>
-      ))}
-    </svg>
+      <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-[10px] tracking-[0.04em] text-ink-faint">
+        {ANNOTATIONS.map((a) => (
+          <span key={a.text}>· {a.text}</span>
+        ))}
+      </div>
+    </div>
   );
 }
