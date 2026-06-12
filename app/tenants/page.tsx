@@ -45,10 +45,7 @@ export default function TenantsPage() {
               <span className="mx-2 text-ink-faint">·</span>
               <span>TENANT REGISTER</span>
             </div>
-            <h1
-              className="mt-6 font-medium text-ink tracking-[-0.025em] leading-[1.05]"
-              style={{ fontSize: "clamp(2.25rem, 6vw, 4rem)" }}
-            >
+            <h1 className="mt-6 text-[clamp(2.75rem,7vw,5rem)] font-medium text-ink tracking-[-0.025em] leading-[1.0]">
               Tenants.
             </h1>
             <p className="mt-6 text-[15px] md:text-base leading-[1.65] text-ink-muted max-w-[60ch]">
@@ -117,13 +114,10 @@ function TenantEntry({ tenant }: { tenant: Tenant }) {
 
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-x-10">
         <div className="lg:col-span-5">
-          <h3
-            className="font-medium text-ink tracking-[-0.02em] leading-[1.18]"
-            style={{ fontSize: "clamp(1.375rem, 2.4vw, 1.75rem)" }}
-          >
+          <h3 className="text-lg md:text-xl font-medium text-ink tracking-[-0.01em] leading-[1.4]">
             {tenant.practitioner}
           </h3>
-          <p className="mt-3 text-[14.5px] md:text-[15px] leading-[1.65] text-ink-muted">
+          <p className="mt-3 text-[15px] md:text-base leading-[1.65] text-ink-muted">
             {tenant.practice}. {tenant.practiceType}.
           </p>
 

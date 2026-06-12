@@ -20,7 +20,7 @@ export function SectionMark({ className }: { className?: string }) {
       <Monogram size={12} />
       <span
         className="font-medium leading-none text-ink-faint"
-        style={{ fontSize: "9px", letterSpacing: "0" }}
+        style={{ fontSize: "12px", letterSpacing: "0" }}
       >
         MODLIO
       </span>
