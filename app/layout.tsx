@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { ColumnGrid } from "@/components/primitives/ColumnGrid";
 import { sans, mono } from "./fonts";
 import "./globals.css";
 
@@ -54,6 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className="min-h-screen bg-bg text-ink antialiased">
+        <ColumnGrid />
         {children}
       </body>
     </html>
