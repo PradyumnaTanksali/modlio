@@ -1,4 +1,5 @@
 import { SectionRule } from "@/components/primitives/SectionRule";
+import { SectionMark } from "@/components/primitives/SectionMark";
 
 type Standard = {
   metric: string;
@@ -21,7 +22,8 @@ const STANDARDS: Standard[] = [
 
 export function EngineeringStandards() {
   return (
-    <section className="border-b border-ink-rule">
+    <section className="relative border-b border-ink-rule">
+      <SectionMark />
       <div className="mx-auto max-w-[1200px] px-6 md:px-12 py-28 md:py-36">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-8 md:gap-x-10">
           <div className="md:col-span-4">

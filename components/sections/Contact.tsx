@@ -1,5 +1,6 @@
 import { Colophon } from "@/components/sections/Colophon";
 import { SectionRule } from "@/components/primitives/SectionRule";
+import { SectionMark } from "@/components/primitives/SectionMark";
 
 const ENTRIES = [
   { label: "For platform inquiries, write to:", email: "platforms@modlio.in" },
@@ -9,7 +10,8 @@ const ENTRIES = [
 
 export function Contact() {
   return (
-    <section className="border-b border-ink-rule">
+    <section className="relative border-b border-ink-rule">
+      <SectionMark />
       <div className="mx-auto max-w-[1200px] px-6 md:px-12 py-28 md:py-36">
         <div className="flex flex-col items-center text-center">
           <SectionRule ordinal="06" label="CONTACT" />
