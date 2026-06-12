@@ -113,6 +113,32 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* BRIEF §3.5 — hover adds a 1px electric-blue underline that draws
+   left-to-right in 200ms. Pseudo-element scaleX transform; solid color. */
+.link-draw {
+  position: relative;
+}
+
+.link-draw::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background-color: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link-draw:hover::after,
+.link-draw:focus-visible::after,
+a:hover > .link-draw::after,
+a:focus-visible > .link-draw::after {
+  transform: scaleX(1);
+}
+
 .hairline {
   border-color: var(--ink-rule);
 }

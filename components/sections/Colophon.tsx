@@ -22,13 +22,13 @@ export function Colophon({ className }: { className?: string }) {
             href="https://corsw.in"
             className="hover:text-accent transition-colors"
           >
-            CORSW.IN &nbsp;&rarr;
+            <span className="link-draw">CORSW.IN</span> &nbsp;&rarr;
           </a>
           <a
             href="https://scenestudio.corsw.in"
             className="hover:text-accent transition-colors"
           >
-            SCENESTUDIO.CORSW.IN &nbsp;&rarr;
+            <span className="link-draw">SCENESTUDIO.CORSW.IN</span> &nbsp;&rarr;
           </a>
         </div>
       </div>

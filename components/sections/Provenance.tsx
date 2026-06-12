@@ -31,7 +31,7 @@ export function Provenance() {
                   value: (
                     <a
                       href="https://corsw.in"
-                      className="border-b border-ink-rule hover:border-accent hover:text-accent transition-colors"
+                      className="link-draw border-b border-ink-rule hover:text-accent transition-colors"
                     >
                       Corner Software (corsw.in)
                     </a>
@@ -44,7 +44,7 @@ export function Provenance() {
                     <span>
                       <a
                         href="https://scenestudio.corsw.in"
-                        className="border-b border-ink-rule hover:border-accent hover:text-accent transition-colors"
+                        className="link-draw border-b border-ink-rule hover:text-accent transition-colors"
                       >
                         Scene (scenestudio.corsw.in)
                       </a>

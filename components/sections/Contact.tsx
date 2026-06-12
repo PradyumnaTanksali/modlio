@@ -34,7 +34,7 @@ export function Contact() {
                 </span>
                 <a
                   href={`mailto:${e.email}`}
-                  className="font-mono tnum text-[14px] md:text-[15px] text-ink hover:text-accent transition-colors border-b border-transparent hover:border-accent inline-block"
+                  className="link-draw font-mono tnum text-[14px] md:text-[15px] text-ink hover:text-accent transition-colors inline-block"
                 >
                   {e.email}
                 </a>

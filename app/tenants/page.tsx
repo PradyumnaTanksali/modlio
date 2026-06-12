@@ -34,7 +34,7 @@ export default function TenantsPage() {
         <div className="mx-auto max-w-[1200px] px-6 md:px-12 pt-10 md:pt-12 pb-20 md:pb-28">
           <Link
             href="/"
-            className="inline-block font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted hover:text-accent transition-colors"
+            className="link-draw inline-block font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted hover:text-accent transition-colors"
           >
             &larr; MODLIO
           </Link>
@@ -162,7 +162,7 @@ function TenantEntry({ tenant }: { tenant: Tenant }) {
               href={tenant.url.href}
               className="group inline-flex items-center gap-2 font-mono text-[12px] tnum text-ink-muted hover:text-accent transition-colors"
             >
-              <span className="border-b border-ink-rule group-hover:border-accent pb-0.5 transition-colors">
+              <span className="link-draw border-b border-ink-rule pb-0.5">
                 {tenant.url.label}
               </span>
               <span aria-hidden>&rarr;</span>
