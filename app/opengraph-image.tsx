@@ -46,7 +46,7 @@ export default async function OG() {
           style={{
             position: "absolute",
             left: 64,
-            right: 64,
+            width: size.width - 128,
             top: 320,
             height: 1,
             background: "#3B82F6",
