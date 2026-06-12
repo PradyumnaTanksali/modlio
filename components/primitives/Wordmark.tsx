@@ -19,11 +19,11 @@ export function Monogram({ size = 20, className }: { size?: number; className?: 
     >
       <title>Modlio</title>
       <desc>Three stacked blocks; the top block has an electric-blue inset square.</desc>
-      <rect width="64" height="64" fill="#0A0B0F" />
-      <rect x="8" y="44" width="48" height="12" fill="#E8EAED" />
-      <rect x="8" y="28" width="32" height="12" fill="#E8EAED" />
-      <rect x="8" y="12" width="20" height="12" fill="#E8EAED" />
-      <rect x="8" y="12" width="12" height="12" fill="#3B82F6" />
+      <rect width="64" height="64" fill="var(--bg)" />
+      <rect x="8" y="44" width="48" height="12" fill="var(--ink)" />
+      <rect x="8" y="28" width="32" height="12" fill="var(--ink)" />
+      <rect x="8" y="12" width="20" height="12" fill="var(--ink)" />
+      <rect x="8" y="12" width="12" height="12" fill="var(--accent)" />
     </svg>
   );
 }

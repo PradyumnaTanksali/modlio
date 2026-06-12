@@ -13,7 +13,7 @@ export function Masthead() {
               className="anim-scan h-px"
               style={{
                 background:
-                  "linear-gradient(90deg, transparent 0%, #3b82f6 30%, #3b82f6 70%, transparent 100%)",
+                  "linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent) 70%, transparent 100%)",
                 width: "40%",
               }}
             />

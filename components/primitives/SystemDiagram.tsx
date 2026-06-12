@@ -131,7 +131,7 @@ export function ArogyamDiagram() {
           key={`${c.from}-${c.to}-${i}`}
           d={pathFor(c)}
           fill="none"
-          stroke="#3B82F6"
+          stroke="var(--accent)"
           strokeWidth={1}
           strokeLinecap="square"
           strokeLinejoin="miter"
@@ -156,7 +156,7 @@ export function ArogyamDiagram() {
             cx={tip.x}
             cy={tip.y}
             r={1.6}
-            fill="#3B82F6"
+            fill="var(--accent)"
             initial={reduced ? false : { opacity: 0 }}
             whileInView={reduced ? undefined : { opacity: 1 }}
             viewport={{ once: true, margin: "-80px" }}
@@ -181,8 +181,8 @@ export function ArogyamDiagram() {
             y={b.y}
             width={b.w}
             height={b.h}
-            fill="#111317"
-            stroke={b.accent ? "#3B82F6" : "#9CA3AF"}
+            fill="var(--bg-card)"
+            stroke={b.accent ? "var(--accent)" : "var(--ink-muted)"}
             strokeWidth={b.accent ? 1 : 0.75}
             strokeOpacity={b.accent ? 1 : 0.55}
           />
@@ -210,7 +210,7 @@ export function ArogyamDiagram() {
               y={b.y + 4}
               width={2}
               height={6}
-              fill="#3B82F6"
+              fill="var(--accent)"
             />
           )}
         </motion.g>

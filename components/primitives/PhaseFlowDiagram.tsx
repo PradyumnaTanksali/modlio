@@ -77,8 +77,8 @@ export function PhaseFlowDiagram() {
                   y={y}
                   width={w}
                   height={h}
-                  fill="#111317"
-                  stroke="#9CA3AF"
+                  fill="var(--bg-card)"
+                  stroke="var(--ink-muted)"
                   strokeOpacity={0.55}
                   strokeWidth={0.75}
                 />
@@ -111,7 +111,7 @@ export function PhaseFlowDiagram() {
                   y1={y + 80}
                   x2={x + w - 16}
                   y2={y + 80}
-                  stroke="#1F2228"
+                  stroke="var(--ink-rule)"
                   strokeWidth={1}
                 />
                 <foreignObject
@@ -152,7 +152,7 @@ export function PhaseFlowDiagram() {
                     y1={y + h / 2}
                     x2={x + w + 36}
                     y2={y + h / 2}
-                    stroke="#3B82F6"
+                    stroke="var(--accent)"
                     strokeWidth={1}
                   />
                   <motion.path
@@ -160,7 +160,7 @@ export function PhaseFlowDiagram() {
                       y + h / 2
                     } L ${x + w + 32} ${y + h / 2 + 4}`}
                     fill="none"
-                    stroke="#3B82F6"
+                    stroke="var(--accent)"
                     strokeWidth={1}
                     strokeLinecap="square"
                     strokeLinejoin="miter"
