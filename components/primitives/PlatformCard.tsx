@@ -67,7 +67,7 @@ export function PlatformCard({ platform }: { platform: Platform }) {
             {platform.internalLink && (
               <Link
                 href={platform.internalLink.href}
-                className="group inline-flex items-center gap-2 font-mono text-[12px] tnum text-ink-muted hover:text-accent transition-colors"
+                className="inline-flex items-center gap-2 font-mono text-[12px] tnum text-ink-muted hover:text-accent transition-colors"
               >
                 <span className="link-draw border-b border-ink-rule pb-0.5">
                   {platform.internalLink.label}
@@ -78,7 +78,7 @@ export function PlatformCard({ platform }: { platform: Platform }) {
             {platform.link && (
               <a
                 href={platform.link.href}
-                className="group inline-flex items-center gap-2 font-mono text-[12px] tnum text-ink-muted hover:text-accent transition-colors"
+                className="inline-flex items-center gap-2 font-mono text-[12px] tnum text-ink-muted hover:text-accent transition-colors"
               >
                 <span className="link-draw border-b border-ink-rule pb-0.5">
                   {platform.link.label}
