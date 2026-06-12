@@ -9,6 +9,8 @@ export type Platform = {
   diagram?: "arogyam";
   table?: { label: string; value: string; meta: string }[];
   link?: { label: string; href: string };
+  /** Internal deep link, rendered alongside the outbound link. */
+  internalLink?: { label: string; href: string };
   reservedNote?: string;
 };
 
@@ -34,6 +36,7 @@ export const platforms: Platform[] = [
       },
     ],
     link: { label: "arogyam.modlio.com", href: "https://arogyam.modlio.com" },
+    internalLink: { label: "tenants", href: "/tenants" },
   },
   {
     ordinal: "02",

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArogyamDiagram } from "@/components/primitives/SystemDiagram";
 import { DataTable } from "@/components/primitives/DataTable";
 import { StatusBadge } from "@/components/primitives/StatusBadge";
@@ -61,17 +62,30 @@ export function PlatformCard({ platform }: { platform: Platform }) {
           </div>
         )}
 
-        {platform.link && (
-          <div className="mt-7 flex justify-end">
-            <a
-              href={platform.link.href}
-              className="group inline-flex items-center gap-2 font-mono text-[12px] tnum text-ink-muted hover:text-accent transition-colors"
-            >
-              <span className="border-b border-ink-rule group-hover:border-accent pb-0.5 transition-colors">
-                {platform.link.label}
-              </span>
-              <span aria-hidden>&rarr;</span>
-            </a>
+        {(platform.link || platform.internalLink) && (
+          <div className="mt-7 flex justify-end gap-6">
+            {platform.internalLink && (
+              <Link
+                href={platform.internalLink.href}
+                className="group inline-flex items-center gap-2 font-mono text-[12px] tnum text-ink-muted hover:text-accent transition-colors"
+              >
+                <span className="border-b border-ink-rule group-hover:border-accent pb-0.5 transition-colors">
+                  {platform.internalLink.label}
+                </span>
+                <span aria-hidden>&rarr;</span>
+              </Link>
+            )}
+            {platform.link && (
+              <a
+                href={platform.link.href}
+                className="group inline-flex items-center gap-2 font-mono text-[12px] tnum text-ink-muted hover:text-accent transition-colors"
+              >
+                <span className="border-b border-ink-rule group-hover:border-accent pb-0.5 transition-colors">
+                  {platform.link.label}
+                </span>
+                <span aria-hidden>&rarr;</span>
+              </a>
+            )}
           </div>
         )}
       </div>
