@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { ArogyamDiagram } from "@/components/primitives/SystemDiagram";
+import {
+  ArogyamDiagram,
+  StreamlineDiagram,
+} from "@/components/primitives/SystemDiagram";
 import { DataTable } from "@/components/primitives/DataTable";
 import { StatusBadge } from "@/components/primitives/StatusBadge";
 import type { Platform } from "@/lib/platforms";
@@ -11,19 +14,29 @@ export function PlatformCard({ platform }: { platform: Platform }) {
 
   return (
     <article className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-x-10 py-12 md:py-16 border-t border-ink-rule">
-      <div className="lg:col-span-7 order-2 lg:order-1">
-        <div className="border border-ink-rule bg-bg-card p-5 md:p-7">
-          <div className="flex items-center justify-between font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
-            <span>SYSTEM DIAGRAM</span>
-            <span className="tnum">arogyam.v2</span>
-          </div>
-          <div className="mt-4">
-            {platform.diagram === "arogyam" && <ArogyamDiagram />}
+      {platform.diagram && (
+        <div className="lg:col-span-7 order-2 lg:order-1">
+          <div className="border border-ink-rule bg-bg-card p-5 md:p-7">
+            <div className="flex items-center justify-between font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+              <span>SYSTEM DIAGRAM</span>
+              <span className="tnum">{platform.diagramLabel}</span>
+            </div>
+            <div className="mt-4">
+              {platform.diagram === "arogyam" ? (
+                <ArogyamDiagram />
+              ) : (
+                <StreamlineDiagram />
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="lg:col-span-5 order-1 lg:order-2 flex flex-col">
+      <div
+        className={`order-1 lg:order-2 flex flex-col ${
+          platform.diagram ? "lg:col-span-5" : "lg:col-span-12"
+        }`}
+      >
         <div className="flex items-center justify-between gap-4">
           <div className="font-mono text-[12.5px] tnum">
             <span className="text-accent">{platform.ordinal}</span>

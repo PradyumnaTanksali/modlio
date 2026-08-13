@@ -304,16 +304,36 @@ STACK           Next.js · Postgres · Rust ·    stk
 
 **Outbound link (bottom-right):** `arogyam.modlio.com →` (or wherever Arogyam lives publicly)
 
-#### Platform 2 — Reserved slot (placeholder, real entry once shipped)
+#### Platform 2 — StreamLine
 
-**Header:** `02 / —`
-**Status:** `IN RESEARCH` (hollow dot)
+**Header:** `02 / STREAMLINE`
+**Status:** `OPERATING` (green dot)
+**Tagline:** `Quote-to-dispatch ERP for small manufacturers.`
 **Description:**
-> *A second platform is in early research. Modlio's pace is deliberate — we ship one platform fully before starting the next.*
+> *A multi-tenant ERP for small manufacturing businesses, rebuilt from a single-machine desktop system into a hosted platform. Every business row belongs to an org and no query runs unscoped — isolation is enforced in Postgres, not in application conditionals.*
+>
+> *StreamLine runs the quote-to-dispatch pipeline: quotations with revisions and PDF delivery, purchase orders that receive into stock in one transaction, and a catalog whose stock levels are derived from an append-only movement ledger. Money is stored as numeric(12,2) and computed in integer paise.*
 
-No diagram. Just a hairline empty placeholder with mono `RESERVED · RETURN IN 2027`.
+**System diagram (schematic):**
+- Boxes: `Web (Next.js 16)` · `Better Auth` · `Server actions (org-scoped)` · `Documents (react-pdf)` · `Email (Resend)` · `Neon Postgres (RLS)` · `Stock ledger` · `Audit log`
+- Connectors: electric-blue 1px lines showing data flow.
+- Annotations (tiny mono): `one org per tenant` · `money in integer paise` · `stock = sum(movements)`.
 
-This is a deliberate flex: showing what's *not* built communicates patience and discipline.
+**Tabular block at bottom:**
+```
+OPERATING       Quotations · Products ·        mod
+                Purchase orders
+IN BUILD        Work orders · Payroll ·        wip
+                Dashboards
+ISOLATION       Org-scoped queries · RLS on    iso
+                every business table
+STACK           Next.js · Neon Postgres ·      stk
+                Drizzle · Better Auth
+```
+
+**Outbound link (bottom-right):** `streamline.corsw.in →`
+
+A reserved slot returns above the fold only when a third platform enters research — the `IN RESEARCH` placeholder card (`RESERVED · RETURN IN <year>`, hairline dashes, no diagram) stays in `PlatformCard` for that case.
 
 ### 4.4 Capabilities — what we build well
 

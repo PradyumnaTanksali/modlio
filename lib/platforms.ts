@@ -6,7 +6,9 @@ export type Platform = {
   status: PlatformStatus;
   tagline?: string;
   description?: string[];
-  diagram?: "arogyam";
+  diagram?: "arogyam" | "streamline";
+  /** Mono slug shown above the schematic, e.g. `arogyam.v2`. */
+  diagramLabel?: string;
   table?: { label: string; value: string; meta: string }[];
   link?: { label: string; href: string };
   /** Internal deep link, rendered alongside the outbound link. */
@@ -25,6 +27,7 @@ export const platforms: Platform[] = [
       "Arogyam handles appointment scheduling, patient records, casepapers with versioning, per-doctor RAG chatbots, and WhatsApp-first patient journeys. Currently operating Tenant #1 in Solapur.",
     ],
     diagram: "arogyam",
+    diagramLabel: "arogyam.v2",
     table: [
       { label: "TENANTS", value: "1 active · 12 in pipeline", meta: "tnt" },
       { label: "LANGUAGES", value: "English · Marathi · Hindi", meta: "lng/03" },
@@ -40,11 +43,33 @@ export const platforms: Platform[] = [
   },
   {
     ordinal: "02",
-    name: "—",
-    status: "in-research",
+    name: "STREAMLINE",
+    status: "operating",
+    tagline: "Quote-to-dispatch ERP for small manufacturers.",
     description: [
-      "A second platform is in early research. Modlio's pace is deliberate — we ship one platform fully before starting the next.",
+      "A multi-tenant ERP for small manufacturing businesses, rebuilt from a single-machine desktop system into a hosted platform. Every business row belongs to an org and no query runs unscoped — isolation is enforced in Postgres, not in application conditionals.",
+      "StreamLine runs the quote-to-dispatch pipeline: quotations with revisions and PDF delivery, purchase orders that receive into stock in one transaction, and a catalog whose stock levels are derived from an append-only movement ledger. Money is stored as numeric(12,2) and computed in integer paise.",
     ],
-    reservedNote: "RESERVED · RETURN IN 2027",
+    diagram: "streamline",
+    diagramLabel: "streamline.v1",
+    table: [
+      {
+        label: "OPERATING",
+        value: "Quotations · Products · Purchase orders",
+        meta: "mod",
+      },
+      { label: "IN BUILD", value: "Work orders · Payroll · Dashboards", meta: "wip" },
+      {
+        label: "ISOLATION",
+        value: "Org-scoped queries · RLS on every business table",
+        meta: "iso",
+      },
+      {
+        label: "STACK",
+        value: "Next.js · Neon Postgres · Drizzle · Better Auth",
+        meta: "stk",
+      },
+    ],
+    link: { label: "streamline.corsw.in", href: "https://streamline.corsw.in" },
   },
 ];

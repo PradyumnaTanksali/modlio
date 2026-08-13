@@ -25,66 +25,105 @@ type Connector = {
   from: string;
   to: string;
   via?: { x: number; y: number }[];
-  arrow?: boolean;
 };
-
-const BOXES: Box[] = [
-  { id: "web", x: 24, y: 32, w: 156, h: 52, label: "Web", sub: "Next.js" },
-  { id: "wa", x: 24, y: 116, w: 156, h: 52, label: "WhatsApp", sub: "Gupshup" },
-  { id: "api", x: 232, y: 76, w: 156, h: 52, label: "API", sub: "tRPC", accent: true },
-  { id: "ws", x: 232, y: 168, w: 156, h: 52, label: "Rust WS sidecar", sub: "Axum · Tokio" },
-  { id: "lg", x: 232, y: 252, w: 156, h: 52, label: "Python LangGraph", sub: "RAG · evals" },
-  { id: "pg", x: 440, y: 32, w: 156, h: 52, label: "Postgres", sub: "RLS · pgcrypto" },
-  { id: "pgv", x: 440, y: 116, w: 156, h: 52, label: "pgvector", sub: "embeddings" },
-  { id: "abdm", x: 440, y: 252, w: 156, h: 52, label: "ABDM", sub: "Sandbox · M2" },
-];
-
-const CONNECTORS: Connector[] = [
-  { from: "web", to: "api" },
-  { from: "wa", to: "api" },
-  { from: "api", to: "pg" },
-  { from: "api", to: "pgv" },
-  { from: "api", to: "ws", via: [{ x: 310, y: 102 }, { x: 310, y: 194 }] },
-  { from: "api", to: "lg", via: [{ x: 310, y: 102 }, { x: 310, y: 278 }] },
-  { from: "lg", to: "abdm" },
-  { from: "lg", to: "pgv", via: [{ x: 412, y: 278 }, { x: 412, y: 142 }] },
-];
 
 type Annotation = { x: number; y: number; text: string };
 
-const ANNOTATIONS: Annotation[] = [
-  { x: 310, y: 24, text: "multi-tenant via RLS" },
-  { x: 310, y: 332, text: "bilingual MR / EN / HI" },
-  { x: 532, y: 332, text: "DPDP-native" },
-];
+type Schematic = {
+  title: string;
+  desc: string;
+  viewBox: { w: number; h: number };
+  boxes: Box[];
+  connectors: Connector[];
+  annotations: Annotation[];
+  /** Parallel entry points, rendered side by side at the top of the mobile stack. */
+  mobileClients: string[];
+  /** The rest of the system, stacked top-to-bottom below the clients. */
+  mobileChain: string[];
+};
 
-const VIEWBOX_W = 620;
-const VIEWBOX_H = 360;
+const AROGYAM: Schematic = {
+  title: "Arogyam architecture",
+  desc:
+    "A schematic system diagram of Arogyam. A Next.js web client and Gupshup " +
+    "WhatsApp gateway both reach a tRPC API. The API talks to Postgres with " +
+    "row-level security, pgvector embeddings, a Rust Axum WebSocket sidecar, " +
+    "and a Python LangGraph orchestrator. LangGraph reaches pgvector and the " +
+    "ABDM sandbox.",
+  viewBox: { w: 620, h: 360 },
+  boxes: [
+    { id: "web", x: 24, y: 32, w: 156, h: 52, label: "Web", sub: "Next.js" },
+    { id: "wa", x: 24, y: 116, w: 156, h: 52, label: "WhatsApp", sub: "Gupshup" },
+    { id: "api", x: 232, y: 76, w: 156, h: 52, label: "API", sub: "tRPC", accent: true },
+    { id: "ws", x: 232, y: 168, w: 156, h: 52, label: "Rust WS sidecar", sub: "Axum · Tokio" },
+    { id: "lg", x: 232, y: 252, w: 156, h: 52, label: "Python LangGraph", sub: "RAG · evals" },
+    { id: "pg", x: 440, y: 32, w: 156, h: 52, label: "Postgres", sub: "RLS · pgcrypto" },
+    { id: "pgv", x: 440, y: 116, w: 156, h: 52, label: "pgvector", sub: "embeddings" },
+    { id: "abdm", x: 440, y: 252, w: 156, h: 52, label: "ABDM", sub: "Sandbox · M2" },
+  ],
+  connectors: [
+    { from: "web", to: "api" },
+    { from: "wa", to: "api" },
+    { from: "api", to: "pg" },
+    { from: "api", to: "pgv" },
+    { from: "api", to: "ws", via: [{ x: 310, y: 102 }, { x: 310, y: 194 }] },
+    { from: "api", to: "lg", via: [{ x: 310, y: 102 }, { x: 310, y: 278 }] },
+    { from: "lg", to: "abdm" },
+    { from: "lg", to: "pgv", via: [{ x: 412, y: 278 }, { x: 412, y: 142 }] },
+  ],
+  annotations: [
+    { x: 310, y: 24, text: "multi-tenant via RLS" },
+    { x: 310, y: 332, text: "bilingual MR / EN / HI" },
+    { x: 532, y: 332, text: "DPDP-native" },
+  ],
+  mobileClients: ["web", "wa"],
+  mobileChain: ["api", "pg", "pgv", "ws", "lg", "abdm"],
+};
 
-/**
- * Mobile vertical stack. Web and WhatsApp are parallel clients of the
- * API — grouped side by side with no connector between them, so the
- * stack never asserts a Web → WhatsApp edge that the system lacks.
- */
-const MOBILE_CLIENTS = ["web", "wa"];
-const MOBILE_CHAIN = ["api", "pg", "pgv", "ws", "lg", "abdm"];
-
-function boxById(id: string) {
-  const b = BOXES.find((b) => b.id === id);
-  if (!b) throw new Error(`box ${id} missing`);
-  return b;
-}
-
-function pathFor(c: Connector): string {
-  const from = boxById(c.from);
-  const to = boxById(c.to);
-  const start = anchor(from, to);
-  const end = anchor(to, from);
-  const pts: { x: number; y: number }[] = [start, ...(c.via ?? []), end];
-  return pts
-    .map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`))
-    .join(" ");
-}
+const STREAMLINE: Schematic = {
+  title: "StreamLine architecture",
+  desc:
+    "A schematic system diagram of StreamLine. A Next.js web client and Better " +
+    "Auth sessions both reach org-scoped server actions. The actions write to " +
+    "Neon Postgres under row-level security, append to the stock ledger and the " +
+    "audit log, and render quotation PDFs that go out over Resend.",
+  viewBox: { w: 620, h: 360 },
+  boxes: [
+    { id: "web", x: 24, y: 32, w: 156, h: 52, label: "Web", sub: "Next.js 16" },
+    { id: "auth", x: 24, y: 116, w: 156, h: 52, label: "Better Auth", sub: "orgs · roles" },
+    {
+      id: "act",
+      x: 232,
+      y: 76,
+      w: 156,
+      h: 52,
+      label: "Server actions",
+      sub: "org-scoped",
+      accent: true,
+    },
+    { id: "doc", x: 232, y: 168, w: 156, h: 52, label: "Documents", sub: "react-pdf" },
+    { id: "mail", x: 232, y: 252, w: 156, h: 52, label: "Email", sub: "Resend" },
+    { id: "pg", x: 440, y: 32, w: 156, h: 52, label: "Neon Postgres", sub: "RLS per org" },
+    { id: "ledger", x: 440, y: 116, w: 156, h: 52, label: "Stock ledger", sub: "append-only" },
+    { id: "audit", x: 440, y: 252, w: 156, h: 52, label: "Audit log", sub: "every mutation" },
+  ],
+  connectors: [
+    { from: "web", to: "act" },
+    { from: "auth", to: "act" },
+    { from: "act", to: "pg" },
+    { from: "act", to: "ledger" },
+    { from: "act", to: "doc", via: [{ x: 310, y: 128 }, { x: 310, y: 194 }] },
+    { from: "doc", to: "mail" },
+    { from: "act", to: "audit", via: [{ x: 412, y: 102 }, { x: 412, y: 278 }] },
+  ],
+  annotations: [
+    { x: 310, y: 24, text: "one org per tenant" },
+    { x: 310, y: 332, text: "money in integer paise" },
+    { x: 532, y: 332, text: "stock = sum(movements)" },
+  ],
+  mobileClients: ["web", "auth"],
+  mobileChain: ["act", "pg", "ledger", "doc", "mail", "audit"],
+};
 
 function anchor(self: Box, other: Box) {
   const sx = self.x + self.w / 2;
@@ -106,30 +145,48 @@ function anchor(self: Box, other: Box) {
 }
 
 export function ArogyamDiagram() {
+  return <SystemSchematic schematic={AROGYAM} />;
+}
+
+export function StreamlineDiagram() {
+  return <SystemSchematic schematic={STREAMLINE} />;
+}
+
+function SystemSchematic({ schematic }: { schematic: Schematic }) {
   const reduced = useReducedMotion();
   const titleId = useId();
   const descId = useId();
+  const { boxes, connectors, annotations, viewBox } = schematic;
+
+  const boxById = (id: string) => {
+    const b = boxes.find((b) => b.id === id);
+    if (!b) throw new Error(`box ${id} missing`);
+    return b;
+  };
+
+  const pathFor = (c: Connector) => {
+    const from = boxById(c.from);
+    const to = boxById(c.to);
+    const pts = [anchor(from, to), ...(c.via ?? []), anchor(to, from)];
+    return pts
+      .map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`))
+      .join(" ");
+  };
 
   return (
     <div>
       <svg
-        viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
+        viewBox={`0 0 ${viewBox.w} ${viewBox.h}`}
         xmlns="http://www.w3.org/2000/svg"
         role="img"
         aria-labelledby={`${titleId} ${descId}`}
         className="w-full h-auto hidden md:block font-mono"
         preserveAspectRatio="xMidYMid meet"
       >
-        <title id={titleId}>Arogyam architecture</title>
-        <desc id={descId}>
-          A schematic system diagram of Arogyam. A Next.js web client and Gupshup
-          WhatsApp gateway both reach a tRPC API. The API talks to Postgres with
-          row-level security, pgvector embeddings, a Rust Axum WebSocket sidecar,
-          and a Python LangGraph orchestrator. LangGraph reaches pgvector and the
-          ABDM sandbox.
-        </desc>
+        <title id={titleId}>{schematic.title}</title>
+        <desc id={descId}>{schematic.desc}</desc>
 
-        {ANNOTATIONS.map((a, i) => (
+        {annotations.map((a, i) => (
           <text
             key={i}
             x={a.x}
@@ -142,7 +199,7 @@ export function ArogyamDiagram() {
           </text>
         ))}
 
-        {CONNECTORS.map((c, i) => (
+        {connectors.map((c, i) => (
           <motion.path
             key={`${c.from}-${c.to}-${i}`}
             d={pathFor(c)}
@@ -163,10 +220,8 @@ export function ArogyamDiagram() {
           />
         ))}
 
-        {CONNECTORS.map((c, i) => {
-          const to = boxById(c.to);
-          const from = boxById(c.from);
-          const tip = anchor(to, from);
+        {connectors.map((c, i) => {
+          const tip = anchor(boxById(c.to), boxById(c.from));
           return (
             <motion.circle
               key={`tip-${c.from}-${c.to}-${i}`}
@@ -186,7 +241,7 @@ export function ArogyamDiagram() {
           );
         })}
 
-        {BOXES.map((b, i) => (
+        {boxes.map((b, i) => (
           <motion.g
             key={b.id}
             variants={fadeUpSm}
@@ -236,7 +291,7 @@ export function ArogyamDiagram() {
         ))}
       </svg>
 
-      <MobileStack />
+      <MobileStack schematic={schematic} boxById={boxById} />
     </div>
   );
 }
@@ -272,28 +327,35 @@ function MobileConnector() {
 
 /**
  * BRIEF §3.6 — diagrams collapse to a vertical flow on mobile.
- * Same boxes and annotations as the desktop schematic: the two
- * parallel clients side by side, then the chain stacked
- * top-to-bottom with accent connectors.
+ * Same boxes and annotations as the desktop schematic: the parallel
+ * clients side by side, then the chain stacked top-to-bottom with
+ * accent connectors. No connector is drawn between the clients, so
+ * the stack never asserts an edge the system lacks.
  */
-function MobileStack() {
+function MobileStack({
+  schematic,
+  boxById,
+}: {
+  schematic: Schematic;
+  boxById: (id: string) => Box;
+}) {
   return (
     <div className="md:hidden flex flex-col font-mono">
       <div className="grid grid-cols-2 gap-2">
-        {MOBILE_CLIENTS.map((id) => (
+        {schematic.mobileClients.map((id) => (
           <MobileBox key={id} box={boxById(id)} />
         ))}
       </div>
       <MobileConnector />
-      {MOBILE_CHAIN.map((id, i) => (
+      {schematic.mobileChain.map((id, i) => (
         <div key={id}>
           <MobileBox box={boxById(id)} />
-          {i < MOBILE_CHAIN.length - 1 && <MobileConnector />}
+          {i < schematic.mobileChain.length - 1 && <MobileConnector />}
         </div>
       ))}
 
       <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-[10px] tracking-[0.04em] text-ink-faint">
-        {ANNOTATIONS.map((a) => (
+        {schematic.annotations.map((a) => (
           <span key={a.text}>· {a.text}</span>
         ))}
       </div>

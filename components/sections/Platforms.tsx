@@ -21,9 +21,10 @@ export function Platforms() {
           </div>
           <div className="md:col-span-8">
             <p className="text-[15px] md:text-base leading-[1.65] text-ink-muted max-w-[60ch]">
-              Modlio operates one platform today and is researching a second.
-              We ship one product fully before starting the next. The schematic
-              for each platform is the architecture as it actually runs.
+              Modlio operates two platforms — one for healthcare practices, one
+              for manufacturing floors. Each one reached production before the
+              next was started. The schematic for each platform is the
+              architecture as it actually runs.
             </p>
           </div>
         </div>

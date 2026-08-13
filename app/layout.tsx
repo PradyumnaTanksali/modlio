@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     "Corner Software",
     "Modlio",
     "Arogyam",
+    "StreamLine",
+    "manufacturing ERP",
   ],
   openGraph: {
     title: "Modlio · Enterprise software that doesn't go down.",
