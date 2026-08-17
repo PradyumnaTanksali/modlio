@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://modlio.corsw.in"),
   title: "Modlio · Enterprise software that doesn't go down.",
   description:
-    "Modlio is the enterprise product division of Corner Software. We build long-running, high-stakes platforms in healthcare, fintech, and IoT. A division of Corsw.",
+    "Modlio builds long-running, high-stakes platforms in healthcare, fintech, and IoT — engineered for uptime, audits, and decade-scale thinking.",
   applicationName: "Modlio",
   authors: [{ name: "Modlio engineering team" }],
   creator: "Corner Software Pvt. Ltd.",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Modlio · Enterprise software that doesn't go down.",
     description:
-      "Long-running, high-stakes platforms — healthcare, fintech, IoT. A division of Corner Software.",
+      "Long-running, high-stakes platforms — healthcare, fintech, IoT.",
     url: "https://modlio.corsw.in",
     siteName: "Modlio",
     type: "website",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Modlio · Enterprise software that doesn't go down.",
     description:
-      "Long-running, high-stakes platforms — healthcare, fintech, IoT. A division of Corner Software.",
+      "Long-running, high-stakes platforms — healthcare, fintech, IoT.",
   },
   icons: {
     icon: [

@@ -107,7 +107,7 @@ export default async function OG() {
             />
             <span>OPERATING · 4 SYSTEMS · 99.9% UPTIME</span>
           </div>
-          <div>A DIVISION OF CORSW</div>
+          <div>MODLIO.CORSW.IN</div>
         </div>
       </div>
     ),

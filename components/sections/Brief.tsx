@@ -19,10 +19,9 @@ export function Brief() {
               className="text-ink font-medium tracking-[-0.02em] leading-[1.18]"
               style={{ fontSize: "clamp(1.5rem, 3vw, 2.125rem)" }}
             >
-              Modlio is the enterprise division of Corner Software. We build
-              long-running, high-stakes systems &mdash; healthcare platforms,
-              financial automation, IoT infrastructure &mdash; for organisations
-              that need uptime, audits, and decade-scale thinking.
+              Modlio builds long-running, high-stakes systems &mdash; healthcare
+              platforms, financial automation, IoT infrastructure &mdash; for
+              organisations that need uptime, audits, and decade-scale thinking.
             </p>
             <div className="mt-8 space-y-5 text-[15px] md:text-base leading-[1.65] text-ink-muted max-w-[62ch]">
               <p>

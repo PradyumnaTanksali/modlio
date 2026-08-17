@@ -11,7 +11,6 @@ export function Colophon({ className }: { className?: string }) {
 
         <div className="md:col-span-5 font-mono text-[12px] tnum leading-[1.7] text-ink-muted">
           <div>Corner Software Pvt. Ltd. · 2024–2026</div>
-          <div>Modlio is a division of Corner Software.</div>
           <div>Built by the Modlio engineering team.</div>
           <div>Set in Inter and JetBrains Mono.</div>
           <div className="text-ink-faint">Version 2.0 · May 2026.</div>
