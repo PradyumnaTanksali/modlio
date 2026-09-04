@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     "Modlio",
     "Arogyam",
     "StreamLine",
+    "Ordio",
     "manufacturing ERP",
   ],
   openGraph: {

@@ -1,11 +1,24 @@
 import Link from "next/link";
+import { DEMO_EMAIL } from "@/lib/platforms";
 import {
   ArogyamDiagram,
+  OrdioDiagram,
   StreamlineDiagram,
 } from "@/components/primitives/SystemDiagram";
 import { DataTable } from "@/components/primitives/DataTable";
 import { StatusBadge } from "@/components/primitives/StatusBadge";
 import type { Platform } from "@/lib/platforms";
+
+const diagrams = {
+  arogyam: ArogyamDiagram,
+  streamline: StreamlineDiagram,
+  ordio: OrdioDiagram,
+} as const;
+
+function renderDiagram(key: NonNullable<Platform["diagram"]>) {
+  const Diagram = diagrams[key];
+  return <Diagram />;
+}
 
 export function PlatformCard({ platform }: { platform: Platform }) {
   if (platform.status === "in-research" && !platform.diagram) {
@@ -21,13 +34,7 @@ export function PlatformCard({ platform }: { platform: Platform }) {
               <span>SYSTEM DIAGRAM</span>
               <span className="tnum">{platform.diagramLabel}</span>
             </div>
-            <div className="mt-4">
-              {platform.diagram === "arogyam" ? (
-                <ArogyamDiagram />
-              ) : (
-                <StreamlineDiagram />
-              )}
-            </div>
+            <div className="mt-4">{renderDiagram(platform.diagram)}</div>
           </div>
         </div>
       )}
@@ -75,8 +82,16 @@ export function PlatformCard({ platform }: { platform: Platform }) {
           </div>
         )}
 
-        {(platform.link || platform.internalLink) && (
-          <div className="mt-7 flex justify-end gap-6">
+        <div className="mt-7 flex flex-wrap items-center justify-end gap-6">
+          {platform.status === "operating" && (
+            <a
+              href={`mailto:${DEMO_EMAIL}?subject=${encodeURIComponent(`Demo request — ${platform.name}`)}`}
+              className="inline-flex items-center gap-2 font-mono text-[12px] tnum text-accent hover:text-ink transition-colors"
+            >
+              <span className="link-draw border-b border-accent/40 pb-0.5">ask for a demo</span>
+              <span aria-hidden>&rarr;</span>
+            </a>
+          )}
             {platform.internalLink && (
               <Link
                 href={platform.internalLink.href}
@@ -99,8 +114,7 @@ export function PlatformCard({ platform }: { platform: Platform }) {
                 <span aria-hidden>&rarr;</span>
               </a>
             )}
-          </div>
-        )}
+        </div>
       </div>
     </article>
   );

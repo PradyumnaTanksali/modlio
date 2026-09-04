@@ -125,6 +125,53 @@ const STREAMLINE: Schematic = {
   mobileChain: ["act", "pg", "ledger", "doc", "mail", "audit"],
 };
 
+const ORDIO: Schematic = {
+  title: "Ordio architecture",
+  desc:
+    "A schematic system diagram of Ordio. A guest phone reached by QR scan and " +
+    "a kitchen display both talk to org-scoped server actions. The actions " +
+    "write to Neon Postgres under row-level security and to the orders table, " +
+    "open a PhonePe checkout whose webhook releases the order to the kitchen, " +
+    "and render A5 PDF receipts handed off over WhatsApp or SMS deep links.",
+  viewBox: { w: 620, h: 360 },
+  boxes: [
+    { id: "guest", x: 24, y: 32, w: 156, h: 52, label: "Guest", sub: "QR scan · phone" },
+    { id: "kds", x: 24, y: 116, w: 156, h: 52, label: "Kitchen display", sub: "SWR polling" },
+    {
+      id: "act",
+      x: 232,
+      y: 76,
+      w: 156,
+      h: 52,
+      label: "Server actions",
+      sub: "org-scoped",
+      accent: true,
+    },
+    { id: "pay", x: 232, y: 168, w: 156, h: 52, label: "PhonePe", sub: "pay before KOT" },
+    { id: "pdf", x: 232, y: 252, w: 156, h: 52, label: "Receipts", sub: "pdf-lib A5" },
+    { id: "pg", x: 440, y: 32, w: 156, h: 52, label: "Neon Postgres", sub: "RLS per café" },
+    { id: "orders", x: 440, y: 116, w: 156, h: 52, label: "Orders", sub: "status timeline" },
+    { id: "hand", x: 440, y: 252, w: 156, h: 52, label: "WhatsApp / SMS", sub: "deep links" },
+  ],
+  connectors: [
+    { from: "guest", to: "act" },
+    { from: "kds", to: "act" },
+    { from: "act", to: "pg" },
+    { from: "act", to: "orders" },
+    { from: "act", to: "pay", via: [{ x: 310, y: 128 }, { x: 310, y: 194 }] },
+    { from: "act", to: "pdf", via: [{ x: 310, y: 128 }, { x: 310, y: 278 }] },
+    { from: "pay", to: "orders", via: [{ x: 412, y: 194 }, { x: 412, y: 142 }] },
+    { from: "pdf", to: "hand" },
+  ],
+  annotations: [
+    { x: 310, y: 24, text: "one café per subdomain" },
+    { x: 310, y: 332, text: "money in integer paise" },
+    { x: 532, y: 332, text: "no ticket before payment" },
+  ],
+  mobileClients: ["guest", "kds"],
+  mobileChain: ["act", "pay", "orders", "pg", "pdf", "hand"],
+};
+
 function anchor(self: Box, other: Box) {
   const sx = self.x + self.w / 2;
   const sy = self.y + self.h / 2;
@@ -150,6 +197,10 @@ export function ArogyamDiagram() {
 
 export function StreamlineDiagram() {
   return <SystemSchematic schematic={STREAMLINE} />;
+}
+
+export function OrdioDiagram() {
+  return <SystemSchematic schematic={ORDIO} />;
 }
 
 function SystemSchematic({ schematic }: { schematic: Schematic }) {
