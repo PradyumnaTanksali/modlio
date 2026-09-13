@@ -5,9 +5,6 @@ import { DEMO_EMAIL } from "@/lib/platforms";
 
 const ENTRIES = [
   { label: "To see a platform running, write to:", email: DEMO_EMAIL },
-  { label: "For platform inquiries, write to:", email: "platforms@modlio.in" },
-  { label: "For engineering inquiries:", email: "engineering@modlio.in" },
-  { label: "For press or partnership:", email: "hello@modlio.in" },
 ];
 
 export function Contact() {

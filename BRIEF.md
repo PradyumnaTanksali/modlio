@@ -472,9 +472,7 @@ and we are not raising. We grow by retained earnings.
 **Copy:**
 
 ```
-For platform inquiries, write to:        platforms@modlio.in
-For engineering inquiries:                engineering@modlio.in
-For press or partnership:                 hello@modlio.in
+To see a platform running, write to:     tanksalipradyumna@gmail.com
 
 We respond within 48 hours on business days.
 We do not take unsolicited proposals.
