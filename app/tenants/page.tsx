@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Tenants — Modlio",
   description:
     "The tenant register of Arogyam, Modlio's healthcare platform. 1 tenant operating in production, 12 in onboarding pipeline.",
+  alternates: { canonical: "/tenants" },
   openGraph: {
     title: "Tenants — Modlio",
     description:

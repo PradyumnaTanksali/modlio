@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Modlio · Three platforms in service",
   description:
     "Arogyam for healthcare practices, StreamLine for manufacturing floors, Ordio for café counters.",
+  alternates: { canonical: "/showcase" },
+  // Thin duplicate of the homepage platforms section: out of the index, links still followed.
+  robots: { index: false, follow: true },
 };
 
 /**
