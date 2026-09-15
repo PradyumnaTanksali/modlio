@@ -1,5 +1,5 @@
 /** Where demo requests go. One address, named once. */
-export const DEMO_EMAIL = "tanksalipradyumna@gmail.com";
+export const DEMO_EMAIL = "hello@corsw.in";
 
 export type PlatformStatus = "operating" | "in-build" | "in-research";
 

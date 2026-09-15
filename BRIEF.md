@@ -472,7 +472,7 @@ and we are not raising. We grow by retained earnings.
 **Copy:**
 
 ```
-To see a platform running, write to:     tanksalipradyumna@gmail.com
+To see a platform running, write to:     hello@corsw.in
 
 We respond within 48 hours on business days.
 We do not take unsolicited proposals.
