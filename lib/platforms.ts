@@ -41,7 +41,7 @@ export const platforms: Platform[] = [
         meta: "stk",
       },
     ],
-    link: { label: "arogyam.modlio.com", href: "https://arogyam.modlio.com" },
+    link: { label: "drtanvis.corsw.in", href: "https://drtanvis.corsw.in/en" },
     internalLink: { label: "tenants", href: "/tenants" },
   },
   {

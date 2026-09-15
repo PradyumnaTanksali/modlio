@@ -45,7 +45,7 @@ export const tenants: Tenant[] = [
     languages: ["English", "Marathi"],
     status: "operating",
     liveSince: "2026-06-07",
-    url: { label: "drtanvis.corsw.in", href: "https://drtanvis.corsw.in" },
+    url: { label: "drtanvis.corsw.in", href: "https://drtanvis.corsw.in/en" },
     modules: [
       {
         ordinal: "01",
