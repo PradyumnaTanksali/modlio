@@ -34,7 +34,7 @@ export function Colophon({ className }: { className?: string }) {
 
       <div className="mt-12 flex justify-center">
         <span
-          aria-label="Modlio signature mark"
+          aria-hidden
           className="inline-block size-2 bg-accent"
         />
       </div>

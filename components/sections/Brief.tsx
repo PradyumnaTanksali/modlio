@@ -37,7 +37,6 @@ export function Brief() {
 
             <div className="mt-12 border-t border-ink-rule pt-5">
               <pre
-                aria-label="Operating uptime statistic"
                 className="font-mono tnum text-[12.5px] md:text-[13px] text-accent overflow-x-auto"
               >
                 <span className="text-ink-faint">$ </span>
